@@ -13,39 +13,44 @@ const queryTypes = {
 };
 
 
-const getDependencies = (value, callback) => {
+const getDependencies = (value, callback, setIsLoading) => {
+    setIsLoading(true);
     get({repoLocation: value, location: 'git', callback: (rsp) => {
-      let processedDependencies = [];
-      let processedDevDependencies = [];
-      let dependencies = rsp.data.dependencies;
-      let devDependencies = rsp && rsp.data.devDependencies;
-  
-      for (const key in devDependencies) {
-        if (devDependencies[key]) {
-          const element = devDependencies[key];
-          processedDevDependencies.push({
-            id: key,
-            packageName: key,
-            current: element,
-          })
+        if (rsp.isError) {
+            callback({isError: true});
+            return;
         }
-      }
+        let processedDependencies = [];
+        let processedDevDependencies = [];
+        let dependencies = rsp.data.dependencies;
+        let devDependencies = rsp && rsp.data.devDependencies;
+    
+        for (const key in devDependencies) {
+            if (devDependencies[key]) {
+            const element = devDependencies[key];
+            processedDevDependencies.push({
+                id: key,
+                packageName: key,
+                current: element,
+            })
+            }
+        }
 
-      for (const key in dependencies) {
-        if (dependencies[key]) {
-          const element = dependencies[key];
-          processedDependencies.push({
-            id: key,
-            packageName: key,
-            current: element,
-          })
+        for (const key in dependencies) {
+            if (dependencies[key]) {
+            const element = dependencies[key];
+            processedDependencies.push({
+                id: key,
+                packageName: key,
+                current: element,
+            })
+            }
         }
-      }
-      callback({dependencies: processedDependencies, devDependencies: processedDevDependencies});
+        callback({dependencies: processedDependencies, devDependencies: processedDevDependencies});
     }});
   };
 
-function QueryTypeButtonGroup(props) {
+function QueryFields(props) {
     const defaultUrl = 'facebook/react';
     const [queryType, setQueryType] = React.useState('url');
     const [urlValue, setUrlValue] = React.useState(defaultUrl);
@@ -57,7 +62,8 @@ function QueryTypeButtonGroup(props) {
     };
 
     const getData = () => {
-        queryType === queryTypes.URL ? getDependencies(urlValue, props.setDependencies) : getDependencies(idValue, props.setDependencies);
+        const {setDependencies, setIsLoading} = props;
+        queryType === queryTypes.URL ? getDependencies(urlValue, setDependencies, setIsLoading) : getDependencies(idValue, props.setDependencies);
     }
 
     const setDependency = (value) => {
@@ -133,4 +139,4 @@ function QueryTypeButtonGroup(props) {
     )
 }
 
-export {QueryTypeButtonGroup};
+export {QueryFields};

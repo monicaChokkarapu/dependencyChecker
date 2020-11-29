@@ -13,7 +13,7 @@ const columns = [
 ];
 
 function DependencyTable(props) {
-  const {dependencyData = [], devDependencyData = [], dependencyType} = props;
+  const {dependencyData = [], devDependencyData = [], dependencyType, setIsLoading} = props;
   const [pageNum, setPageNum] = useState(1);
   const rowData = dependencyType === 'dependencies' ? dependencyData : devDependencyData;
   const [stateRowData, setStateRowData] = useState(rowData);
@@ -54,6 +54,7 @@ function DependencyTable(props) {
       });
     } 
     setStateRowData(rowData);
+    setIsLoading(false);
   }, [rowData, pageNum, stateRowData, dependencyData]);
 
   return (

@@ -2,6 +2,26 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+# Components used in this app.
+ALl the components used in this app are from Material UI react
+
+# App Goal
+1. This is app is used to get the package of any repo and show the current versions, its latest versions.
+2. If the version is outdated, outdated column will show true.
+3. Using audit api check if the packages has any vulnerabilities
+
+# API's used
+
+# Get repos package
+https://raw.githubusercontent.com/facebook/react/master/package.json
+
+# Get latest versions
+https://api.npms.io/v2/package/mget -- Need to send a payload of package names.
+
+# Package Audits
+https://registry.npmjs.org/-/npm/v1/security/audits -- Each row will do this query to get its vulnerabilities
+
 ## Available Scripts
 
 In the project directory, you can run:

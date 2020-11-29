@@ -30,6 +30,8 @@ function get(apiCfg) {
       })
         .then((response) => {
             apiCfg.callback(response)
+        }).catch((response) => {
+            apiCfg.callback({response, isError: true})
         });
 }
 
