@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import React, {useMemo} from 'react';
+import {DependencyTable} from 'DependencyTable';
+import {QueryTypeButtonGroup} from 'QueryTypeButtonGroup';
 import './App.css';
 
 function App() {
+  const [dependencyData, setDependencyData] = React.useState([]);
+  const [devDependencyData, setDevDependencyData] = React.useState([]);
+  const [dependencyType, setDependencyType] = React.useState('devDependencies');
+  
+  const setDependencies = ({dependencies = [], devDependencies = []}) => {
+    setDependencyData(dependencies);
+    setDevDependencyData(devDependencies);
+  }
   return (
-    <div className="App">
+    <div>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h4>Dependency Checker</h4>
       </header>
+      <div className='App-components'>
+        <QueryTypeButtonGroup dependencyData={dependencyData} devDependencyData={devDependencyData} setDependencies={setDependencies} setDependencyType={setDependencyType}/>
+        <DependencyTable dependencyData={dependencyData} devDependencyData={devDependencyData} dependencyType={dependencyType}/>
+      </div>
     </div>
   );
 }
