@@ -84,6 +84,8 @@ function QueryFields(props) {
                 <ToggleButton value="url" aria-label="left aligned">
                     <text>URL</text>
                 </ToggleButton>
+                {/* TODO: Adding this button for now but, there is no logic my idea is to query repositories within the specified range
+                without user giving the repository url */}
                 <ToggleButton value="idRange" aria-label="centered">
                     <text>ID Range</text>
                 </ToggleButton>
